@@ -1,6 +1,6 @@
 ---
 name: html-expert
-user-invokable: true
+user-invokable: false
 description: Expert in generating professional, accessible HTML reports with modern styling and interactive features
 argument-hint: Provide the report data or reference to markdown/data source to transform into HTML
 tools: ['edit/createDirectory', 'edit/createFile', 'edit/editFiles', 'search/fileSearch', 'search/listDirectory', 'execute/runInTerminal', 'execute/getTerminalOutput', 'read/readFile', 'agent/runSubagent', 'search/changes', 'search/searchResults', 'search/textSearch', 'web/fetch']
@@ -312,3 +312,8 @@ I WILL:
 - Compliance audit documentation
 - Performance analysis reports
 - Project status dashboards
+
+## About This Agent
+
+version: 1.0.0
+last-updated: 2026-02-06

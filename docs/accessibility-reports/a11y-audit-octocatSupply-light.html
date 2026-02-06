@@ -1,0 +1,1956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="WCAG 2.2 Accessibility Audit Report for OctoCAT Supply Chain Application (Light Theme)">
+	<title>A11y Audit Report - OctoCAT Supply Chain (Light Theme) | February 6, 2026</title>
+	<style>
+		/* ============================================
+		   CSS Design System & Variables
+		   ============================================ */
+		:root {
+			/* Severity Colors */
+			--color-critical: #DC2626;
+			--color-important: #F59E0B;
+			--color-enhancement: #3B82F6;
+			--color-success: #10B981;
+			--color-neutral: #6B7280;
+			
+			/* Backgrounds */
+			--bg-primary: #FFFFFF;
+			--bg-secondary: #F9FAFB;
+			--bg-tertiary: #F3F4F6;
+			--bg-code: #1F2937;
+			--bg-code-highlight: #374151;
+			
+			/* Text Colors */
+			--text-primary: #111827;
+			--text-secondary: #4B5563;
+			--text-muted: #6B7280;
+			--text-inverse: #FFFFFF;
+			
+			/* App Brand Colors */
+			--brand-primary: #76B852;
+			--brand-accent: #8BC34A;
+			
+			/* Typography */
+			--font-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+			--font-mono: "SF Mono", Menlo, Monaco, "Cascadia Code", "Courier New", monospace;
+			--font-size-xs: 0.75rem;
+			--font-size-sm: 0.875rem;
+			--font-size-base: 1rem;
+			--font-size-lg: 1.125rem;
+			--font-size-xl: 1.25rem;
+			--font-size-2xl: 1.5rem;
+			--font-size-3xl: 1.875rem;
+			--font-size-4xl: 2.25rem;
+			--line-height-tight: 1.25;
+			--line-height-normal: 1.5;
+			--line-height-relaxed: 1.75;
+			
+			/* Spacing */
+			--space-xs: 0.25rem;
+			--space-sm: 0.5rem;
+			--space-md: 1rem;
+			--space-lg: 1.5rem;
+			--space-xl: 2rem;
+			--space-2xl: 3rem;
+			--space-3xl: 4rem;
+			
+			/* Borders & Shadows */
+			--border-radius: 0.5rem;
+			--border-radius-lg: 0.75rem;
+			--border-color: #E5E7EB;
+			--shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+			--shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+			--shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+			--shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+		}
+
+		/* ============================================
+		   Base Styles
+		   ============================================ */
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		html {
+			scroll-behavior: smooth;
+		}
+
+		body {
+			font-family: var(--font-system);
+			font-size: var(--font-size-base);
+			line-height: var(--line-height-normal);
+			color: var(--text-primary);
+			background: var(--bg-secondary);
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+		}
+
+		/* ============================================
+		   Header & Navigation
+		   ============================================ */
+		.report-header {
+			background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
+			color: var(--text-inverse);
+			padding: var(--space-2xl) var(--space-lg);
+			box-shadow: var(--shadow-lg);
+		}
+
+		.report-header h1 {
+			font-size: var(--font-size-3xl);
+			font-weight: 700;
+			margin-bottom: var(--space-sm);
+			line-height: var(--line-height-tight);
+		}
+
+		.report-meta {
+			display: flex;
+			flex-wrap: wrap;
+			gap: var(--space-lg);
+			font-size: var(--font-size-sm);
+			opacity: 0.95;
+		}
+
+		.report-meta-item {
+			display: flex;
+			align-items: center;
+			gap: var(--space-xs);
+		}
+
+		.report-meta-icon {
+			font-size: var(--font-size-lg);
+		}
+
+		/* ============================================
+		   Navigation & Filters
+		   ============================================ */
+		.sticky-nav {
+			position: sticky;
+			top: 0;
+			background: var(--bg-primary);
+			border-bottom: 2px solid var(--border-color);
+			padding: var(--space-md) var(--space-lg);
+			z-index: 100;
+			box-shadow: var(--shadow-sm);
+		}
+
+		.filter-controls {
+			display: flex;
+			flex-wrap: wrap;
+			gap: var(--space-md);
+			align-items: center;
+			max-width: 1400px;
+			margin: 0 auto;
+		}
+
+		.filter-label {
+			font-weight: 600;
+			font-size: var(--font-size-sm);
+			color: var(--text-secondary);
+		}
+
+		.filter-buttons {
+			display: flex;
+			gap: var(--space-sm);
+			flex-wrap: wrap;
+		}
+
+		.filter-btn {
+			padding: var(--space-sm) var(--space-md);
+			border: 1px solid var(--border-color);
+			border-radius: var(--border-radius);
+			background: var(--bg-primary);
+			color: var(--text-primary);
+			font-size: var(--font-size-sm);
+			font-weight: 500;
+			cursor: pointer;
+			transition: all 0.2s ease;
+		}
+
+		.filter-btn:hover {
+			background: var(--bg-tertiary);
+			border-color: var(--text-muted);
+		}
+
+		.filter-btn:focus {
+			outline: 2px solid var(--brand-primary);
+			outline-offset: 2px;
+		}
+
+		.filter-btn.active {
+			background: var(--brand-primary);
+			color: var(--text-inverse);
+			border-color: var(--brand-primary);
+		}
+
+		/* ============================================
+		   Main Content Container
+		   ============================================ */
+		main {
+			max-width: 1400px;
+			margin: 0 auto;
+			padding: var(--space-2xl) var(--space-lg);
+		}
+
+		section {
+			margin-bottom: var(--space-3xl);
+		}
+
+		section h2 {
+			font-size: var(--font-size-2xl);
+			font-weight: 700;
+			margin-bottom: var(--space-lg);
+			color: var(--text-primary);
+			border-bottom: 3px solid var(--brand-primary);
+			padding-bottom: var(--space-sm);
+		}
+
+		/* ============================================
+		   Dashboard Summary Cards
+		   ============================================ */
+		.dashboard {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+			gap: var(--space-lg);
+			margin-bottom: var(--space-2xl);
+		}
+
+		.summary-card {
+			background: var(--bg-primary);
+			border-radius: var(--border-radius-lg);
+			padding: var(--space-lg);
+			box-shadow: var(--shadow-md);
+			transition: transform 0.2s ease, box-shadow 0.2s ease;
+		}
+
+		.summary-card:hover {
+			transform: translateY(-2px);
+			box-shadow: var(--shadow-lg);
+		}
+
+		.summary-card-header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: var(--space-md);
+		}
+
+		.summary-card h3 {
+			font-size: var(--font-size-lg);
+			font-weight: 600;
+			color: var(--text-secondary);
+		}
+
+		.summary-card-icon {
+			font-size: var(--font-size-3xl);
+		}
+
+		.summary-card-value {
+			font-size: var(--font-size-4xl);
+			font-weight: 700;
+			line-height: var(--line-height-tight);
+		}
+
+		.summary-card-label {
+			font-size: var(--font-size-sm);
+			color: var(--text-muted);
+			margin-top: var(--space-xs);
+		}
+
+		.card-critical { border-left: 4px solid var(--color-critical); }
+		.card-important { border-left: 4px solid var(--color-important); }
+		.card-enhancement { border-left: 4px solid var(--color-enhancement); }
+		.card-success { border-left: 4px solid var(--color-success); }
+
+		.value-critical { color: var(--color-critical); }
+		.value-important { color: var(--color-important); }
+		.value-enhancement { color: var(--color-enhancement); }
+		.value-success { color: var(--color-success); }
+
+		/* ============================================
+		   Conformance Level Badge
+		   ============================================ */
+		.conformance-badge {
+			background: var(--bg-primary);
+			border-radius: var(--border-radius-lg);
+			padding: var(--space-lg);
+			box-shadow: var(--shadow-md);
+			text-align: center;
+			border: 3px solid var(--color-critical);
+		}
+
+		.conformance-status {
+			font-size: var(--font-size-3xl);
+			font-weight: 700;
+			color: var(--color-critical);
+			margin-bottom: var(--space-sm);
+		}
+
+		.conformance-detail {
+			font-size: var(--font-size-base);
+			color: var(--text-secondary);
+		}
+
+		/* ============================================
+		   Issue Cards
+		   ============================================ */
+		.issues-container {
+			display: flex;
+			flex-direction: column;
+			gap: var(--space-lg);
+		}
+
+		.issue-card {
+			background: var(--bg-primary);
+			border-radius: var(--border-radius-lg);
+			box-shadow: var(--shadow-md);
+			overflow: hidden;
+			transition: box-shadow 0.2s ease;
+		}
+
+		.issue-card:hover {
+			box-shadow: var(--shadow-xl);
+		}
+
+		.issue-header {
+			padding: var(--space-lg);
+			display: flex;
+			align-items: flex-start;
+			gap: var(--space-md);
+			border-bottom: 1px solid var(--border-color);
+		}
+
+		.severity-badge {
+			display: inline-flex;
+			align-items: center;
+			gap: var(--space-xs);
+			padding: var(--space-xs) var(--space-md);
+			border-radius: 9999px;
+			font-size: var(--font-size-xs);
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.05em;
+			white-space: nowrap;
+			flex-shrink: 0;
+		}
+
+		.severity-critical {
+			background: rgba(220, 38, 38, 0.1);
+			color: var(--color-critical);
+			border: 1px solid var(--color-critical);
+		}
+
+		.severity-important {
+			background: rgba(245, 158, 11, 0.1);
+			color: var(--color-important);
+			border: 1px solid var(--color-important);
+		}
+
+		.severity-enhancement {
+			background: rgba(59, 130, 246, 0.1);
+			color: var(--color-enhancement);
+			border: 1px solid var(--color-enhancement);
+		}
+
+		.issue-header-content {
+			flex: 1;
+		}
+
+		.issue-title {
+			font-size: var(--font-size-xl);
+			font-weight: 700;
+			margin-bottom: var(--space-xs);
+			color: var(--text-primary);
+		}
+
+		.wcag-reference {
+			display: inline-flex;
+			align-items: center;
+			gap: var(--space-xs);
+			font-size: var(--font-size-sm);
+			color: var(--brand-primary);
+			text-decoration: none;
+			font-weight: 500;
+		}
+
+		.wcag-reference:hover {
+			text-decoration: underline;
+		}
+
+		.issue-body {
+			padding: var(--space-lg);
+		}
+
+		.issue-section {
+			margin-bottom: var(--space-lg);
+		}
+
+		.issue-section:last-child {
+			margin-bottom: 0;
+		}
+
+		.issue-section-title {
+			font-size: var(--font-size-sm);
+			font-weight: 700;
+			text-transform: uppercase;
+			color: var(--text-secondary);
+			margin-bottom: var(--space-sm);
+			letter-spacing: 0.05em;
+		}
+
+		.issue-description {
+			color: var(--text-primary);
+			line-height: var(--line-height-relaxed);
+		}
+
+		.issue-location {
+			display: flex;
+			align-items: center;
+			gap: var(--space-sm);
+			padding: var(--space-md);
+			background: var(--bg-tertiary);
+			border-radius: var(--border-radius);
+			font-family: var(--font-mono);
+			font-size: var(--font-size-sm);
+		}
+
+		.issue-location-icon {
+			color: var(--text-muted);
+		}
+
+		.file-path {
+			color: var(--brand-primary);
+			font-weight: 600;
+		}
+
+		.impact-box {
+			padding: var(--space-md);
+			background: rgba(245, 158, 11, 0.05);
+			border-left: 4px solid var(--color-important);
+			border-radius: var(--border-radius);
+			color: var(--text-primary);
+			line-height: var(--line-height-relaxed);
+		}
+
+		/* ============================================
+		   Code Examples
+		   ============================================ */
+		.code-comparison {
+			display: grid;
+			grid-template-columns: 1fr;
+			gap: var(--space-md);
+		}
+
+		@media (min-width: 768px) {
+			.code-comparison {
+				grid-template-columns: 1fr 1fr;
+			}
+		}
+
+		.code-block {
+			position: relative;
+		}
+
+		.code-block-header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: var(--space-sm) var(--space-md);
+			background: var(--bg-code);
+			border-radius: var(--border-radius) var(--border-radius) 0 0;
+		}
+
+		.code-block-label {
+			display: flex;
+			align-items: center;
+			gap: var(--space-xs);
+			font-size: var(--font-size-xs);
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.05em;
+		}
+
+		.code-label-before {
+			color: var(--color-critical);
+		}
+
+		.code-label-after {
+			color: var(--color-success);
+		}
+
+		.copy-button {
+			background: transparent;
+			border: 1px solid rgba(255, 255, 255, 0.2);
+			color: var(--text-inverse);
+			padding: var(--space-xs) var(--space-sm);
+			border-radius: var(--border-radius);
+			font-size: var(--font-size-xs);
+			cursor: pointer;
+			transition: all 0.2s ease;
+		}
+
+		.copy-button:hover {
+			background: rgba(255, 255, 255, 0.1);
+		}
+
+		.copy-button:focus {
+			outline: 2px solid var(--brand-accent);
+			outline-offset: 2px;
+		}
+
+		.code-content {
+			background: var(--bg-code);
+			color: #E5E7EB;
+			padding: var(--space-md);
+			overflow-x: auto;
+			font-family: var(--font-mono);
+			font-size: var(--font-size-sm);
+			line-height: var(--line-height-relaxed);
+			border-radius: 0 0 var(--border-radius) var(--border-radius);
+		}
+
+		.code-content pre {
+			margin: 0;
+		}
+
+		.code-content code {
+			font-family: inherit;
+		}
+
+		/* Syntax Highlighting */
+		.code-keyword { color: #C792EA; }
+		.code-string { color: #C3E88D; }
+		.code-comment { color: #6B7280; font-style: italic; }
+		.code-function { color: #82AAFF; }
+		.code-attribute { color: #FFCB6B; }
+		.code-tag { color: #F07178; }
+
+		/* ============================================
+		   Collapsible Details
+		   ============================================ */
+		details {
+			background: var(--bg-secondary);
+			border-radius: var(--border-radius);
+			overflow: hidden;
+		}
+
+		summary {
+			padding: var(--space-md);
+			background: var(--bg-tertiary);
+			cursor: pointer;
+			font-weight: 600;
+			list-style: none;
+			display: flex;
+			align-items: center;
+			gap: var(--space-sm);
+			transition: background 0.2s ease;
+		}
+
+		summary:hover {
+			background: #E5E7EB;
+		}
+
+		summary:focus {
+			outline: 2px solid var(--brand-primary);
+			outline-offset: -2px;
+		}
+
+		summary::before {
+			content: "▶";
+			display: inline-block;
+			transition: transform 0.2s ease;
+			color: var(--brand-primary);
+			font-size: var(--font-size-sm);
+		}
+
+		details[open] summary::before {
+			transform: rotate(90deg);
+		}
+
+		details .details-content {
+			padding: var(--space-md);
+		}
+
+		/* ============================================
+		   Recommendations List
+		   ============================================ */
+		.recommendations-list {
+			display: flex;
+			flex-direction: column;
+			gap: var(--space-md);
+		}
+
+		.recommendation-item {
+			background: var(--bg-primary);
+			border-radius: var(--border-radius-lg);
+			padding: var(--space-lg);
+			border-left: 4px solid var(--brand-primary);
+			box-shadow: var(--shadow-sm);
+		}
+
+		.recommendation-item h4 {
+			font-size: var(--font-size-lg);
+			font-weight: 600;
+			margin-bottom: var(--space-sm);
+			color: var(--text-primary);
+		}
+
+		.recommendation-item p {
+			color: var(--text-secondary);
+			line-height: var(--line-height-relaxed);
+			margin-bottom: var(--space-sm);
+		}
+
+		.recommendation-item ul {
+			margin-left: var(--space-lg);
+			color: var(--text-secondary);
+		}
+
+		.recommendation-item li {
+			margin-bottom: var(--space-xs);
+		}
+
+		/* ============================================
+		   Footer
+		   ============================================ */
+		footer {
+			background: var(--bg-code);
+			color: var(--text-inverse);
+			padding: var(--space-xl) var(--space-lg);
+			text-align: center;
+			font-size: var(--font-size-sm);
+		}
+
+		footer p {
+			opacity: 0.8;
+		}
+
+		/* ============================================
+		   Utility Classes
+		   ============================================ */
+		.hidden {
+			display: none !important;
+		}
+
+		.sr-only {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			padding: 0;
+			margin: -1px;
+			overflow: hidden;
+			clip: rect(0, 0, 0, 0);
+			white-space: nowrap;
+			border-width: 0;
+		}
+
+		/* ============================================
+		   Print Styles
+		   ============================================ */
+		@media print {
+			body {
+				font-size: 10pt;
+				background: white;
+			}
+			
+			.sticky-nav,
+			.copy-button {
+				display: none !important;
+			}
+			
+			.issue-card {
+				page-break-inside: avoid;
+				box-shadow: none;
+				border: 1px solid var(--border-color);
+				margin-bottom: var(--space-md);
+			}
+			
+			details {
+				display: block;
+			}
+			
+			summary {
+				display: none;
+			}
+			
+			details .details-content {
+				display: block !important;
+			}
+			
+			.dashboard {
+				page-break-inside: avoid;
+			}
+			
+			a {
+				text-decoration: underline;
+			}
+			
+			.code-content {
+				background: #f5f5f5 !important;
+				color: #000 !important;
+				border: 1px solid #ddd;
+			}
+		}
+
+		/* ============================================
+		   Responsive Design
+		   ============================================ */
+		@media (max-width: 768px) {
+			.report-header h1 {
+				font-size: var(--font-size-2xl);
+			}
+			
+			.filter-controls {
+				flex-direction: column;
+				align-items: flex-start;
+			}
+			
+			.issue-header {
+				flex-direction: column;
+			}
+			
+			.issue-title {
+				font-size: var(--font-size-lg);
+			}
+		}
+	</style>
+</head>
+<body>
+	<!-- ============================================
+	     HEADER SECTION
+	     ============================================ -->
+	<header>
+		<div class="report-header">
+			<h1>🔍 Web Accessibility Audit Report</h1>
+			<div class="report-meta">
+				<div class="report-meta-item">
+					<span class="report-meta-icon">📦</span>
+					<span>OctoCAT Supply Chain Management</span>
+				</div>
+				<div class="report-meta-item">
+					<span class="report-meta-icon">🎨</span>
+					<span>Light Theme Analysis</span>
+				</div>
+				<div class="report-meta-item">
+					<span class="report-meta-icon">📅</span>
+					<span>Generated: February 6, 2026</span>
+				</div>
+				<div class="report-meta-item">
+					<span class="report-meta-icon">📋</span>
+					<span>Standard: WCAG 2.2 Level AA</span>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<!-- ============================================
+	     STICKY FILTER NAVIGATION
+	     ============================================ -->
+	<nav class="sticky-nav" aria-label="Filter issues by severity">
+		<div class="filter-controls">
+			<span class="filter-label">Filter by Severity:</span>
+			<div class="filter-buttons" role="group" aria-label="Severity filter buttons">
+				<button class="filter-btn active" data-filter="all" aria-pressed="true">
+					All Issues (8)
+				</button>
+				<button class="filter-btn" data-filter="critical" aria-pressed="false">
+					🔴 Critical (3)
+				</button>
+				<button class="filter-btn" data-filter="important" aria-pressed="false">
+					🟡 Important (3)
+				</button>
+				<button class="filter-btn" data-filter="enhancement" aria-pressed="false">
+					🟢 Enhancement (2)
+				</button>
+			</div>
+		</div>
+	</nav>
+
+	<!-- ============================================
+	     MAIN CONTENT
+	     ============================================ -->
+	<main>
+		<!-- Executive Summary Dashboard -->
+		<section aria-labelledby="summary-heading">
+			<h2 id="summary-heading">Executive Summary</h2>
+			
+			<div class="dashboard">
+				<div class="summary-card card-critical">
+					<div class="summary-card-header">
+						<h3>Critical Issues</h3>
+						<span class="summary-card-icon">🔴</span>
+					</div>
+					<div class="summary-card-value value-critical">3</div>
+					<div class="summary-card-label">Level A Violations</div>
+				</div>
+
+				<div class="summary-card card-important">
+					<div class="summary-card-header">
+						<h3>Important Issues</h3>
+						<span class="summary-card-icon">🟡</span>
+					</div>
+					<div class="summary-card-value value-important">3</div>
+					<div class="summary-card-label">Level AA Violations</div>
+				</div>
+
+				<div class="summary-card card-enhancement">
+					<div class="summary-card-header">
+						<h3>Enhancements</h3>
+						<span class="summary-card-icon">🟢</span>
+					</div>
+					<div class="summary-card-value value-enhancement">2</div>
+					<div class="summary-card-label">Best Practice Recommendations</div>
+				</div>
+
+				<div class="summary-card card-success">
+					<div class="summary-card-header">
+						<h3>Files Analyzed</h3>
+						<span class="summary-card-icon">📄</span>
+					</div>
+					<div class="summary-card-value" style="color: var(--text-primary);">9</div>
+					<div class="summary-card-label">Components & Configuration</div>
+				</div>
+			</div>
+
+			<div class="conformance-badge">
+				<div class="conformance-status">⚠️ FAILS WCAG Level A</div>
+				<div class="conformance-detail">
+					Current conformance level is below minimum standards due to critical violations.<br>
+					<strong>Target Goal:</strong> WCAG 2.2 Level AA Conformance
+				</div>
+			</div>
+		</section>
+
+		<!-- Application Context -->
+		<section aria-labelledby="context-heading">
+			<h2 id="context-heading">Application Context</h2>
+			<div class="recommendation-item">
+				<h4>Technology Stack</h4>
+				<ul>
+					<li><strong>Framework:</strong> React 18+ with TypeScript</li>
+					<li><strong>Styling:</strong> Tailwind CSS</li>
+					<li><strong>Theme:</strong> Light Mode (Primary Analysis)</li>
+					<li><strong>Primary Color:</strong> #76B852 (Green)</li>
+					<li><strong>Accent Color:</strong> #8BC34A (Light Green)</li>
+					<li><strong>Background:</strong> #f5f5f5 (bg-gray-100) with white card components</li>
+				</ul>
+			</div>
+			<div class="recommendation-item" style="margin-top: var(--space-md);">
+				<h4>Files Analyzed</h4>
+				<ul>
+					<li><code>frontend/src/App.tsx</code></li>
+					<li><code>frontend/src/components/Navigation.tsx</code></li>
+					<li><code>frontend/src/components/Products.tsx</code></li>
+					<li><code>frontend/src/components/Login.tsx</code></li>
+					<li><code>frontend/src/components/Footer.tsx</code></li>
+					<li><code>frontend/src/components/Cart.tsx</code></li>
+					<li><code>frontend/src/components/Welcome.tsx</code></li>
+					<li><code>frontend/src/index.css</code></li>
+					<li><code>frontend/tailwind.config.js</code></li>
+				</ul>
+			</div>
+		</section>
+
+		<!-- Detailed Findings -->
+		<section aria-labelledby="findings-heading">
+			<h2 id="findings-heading">Detailed Findings</h2>
+			<div class="issues-container">
+				
+				<!-- Issue 1: Focus Visible -->
+				<article class="issue-card" data-severity="critical">
+					<div class="issue-header">
+						<span class="severity-badge severity-critical">
+							🔴 Critical
+						</span>
+						<div class="issue-header-content">
+							<h3 class="issue-title">Suppressed Keyboard Focus Indicators</h3>
+							<a href="https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html" 
+							   class="wcag-reference" 
+							   target="_blank" 
+							   rel="noopener noreferrer">
+								📖 WCAG 2.4.7 Focus Visible (Level AA)
+								<span aria-hidden="true">↗</span>
+							</a>
+						</div>
+					</div>
+					<div class="issue-body">
+						<div class="issue-section">
+							<h4 class="issue-section-title">Issue Description</h4>
+							<p class="issue-description">
+								The Navigation component uses <code>focus:outline-none</code> on interactive elements, which completely removes visible focus indicators for keyboard navigation. This violates WCAG 2.4.7 and makes the application unusable for keyboard-only users who cannot see where focus is located.
+							</p>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">📍 Location</h4>
+							<div class="issue-location">
+								<span class="issue-location-icon">📄</span>
+								<span class="file-path">frontend/src/components/Navigation.tsx</span>
+								<span style="color: var(--text-muted);">Lines 117, 126</span>
+							</div>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">💥 Impact</h4>
+							<div class="impact-box">
+								<strong>Affected Users:</strong> Keyboard-only users, users with motor impairments, power users who prefer keyboard navigation<br><br>
+								<strong>Severity:</strong> Without visible focus indicators, keyboard users cannot determine which element currently has focus. This makes navigation nearly impossible and is a complete barrier to accessibility.
+							</div>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">✅ Recommended Fix</h4>
+							<details>
+								<summary>View Code Examples</summary>
+								<div class="details-content">
+									<div class="code-comparison">
+										<div class="code-block">
+											<div class="code-block-header">
+												<span class="code-block-label code-label-before">
+													❌ Before (Violates WCAG)
+												</span>
+											</div>
+											<div class="code-content">
+<pre><code><span class="code-comment">// Navigation.tsx - Lines 117, 126</span>
+<span class="code-tag">&lt;button</span>
+  <span class="code-attribute">className</span>=<span class="code-string">"p-2 rounded-lg 
+    hover:bg-gray-100 
+    <span style="background: rgba(220, 38, 38, 0.2);">focus:outline-none</span>"</span>
+  <span class="code-attribute">onClick</span>={<span class="code-function">toggleTheme</span>}
+<span class="code-tag">&gt;</span>
+  {<span class="code-comment">/* ... */</span>}
+<span class="code-tag">&lt;/button&gt;</span></code></pre>
+											</div>
+										</div>
+
+										<div class="code-block">
+											<div class="code-block-header">
+												<span class="code-block-label code-label-after">
+													✅ After (WCAG Compliant)
+												</span>
+											</div>
+											<div class="code-content">
+<pre><code><span class="code-comment">// Navigation.tsx - Lines 117, 126</span>
+<span class="code-tag">&lt;button</span>
+  <span class="code-attribute">className</span>=<span class="code-string">"p-2 rounded-lg 
+    hover:bg-gray-100 
+    <span style="background: rgba(16, 185, 129, 0.2);">focus:outline-2 
+    focus:outline-offset-2 
+    focus:outline-green-600</span>"</span>
+  <span class="code-attribute">onClick</span>={<span class="code-function">toggleTheme</span>}
+<span class="code-tag">&gt;</span>
+  {<span class="code-comment">/* ... */</span>}
+<span class="code-tag">&lt;/button&gt;</span></code></pre>
+											</div>
+										</div>
+									</div>
+									<p style="margin-top: var(--space-md); color: var(--text-secondary);">
+										<strong>Alternative:</strong> Remove <code>focus:outline-none</code> entirely to use browser default focus indicators, or implement custom focus styles using <code>focus-visible</code> pseudo-class for keyboard-only focus indication.
+									</p>
+								</div>
+							</details>
+						</div>
+					</div>
+				</article>
+
+				<!-- Issue 2: Link Purpose -->
+				<article class="issue-card" data-severity="critical">
+					<div class="issue-header">
+						<span class="severity-badge severity-critical">
+							🔴 Critical
+						</span>
+						<div class="issue-header-content">
+							<h3 class="issue-title">Links Without Meaningful Destinations</h3>
+							<a href="https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context.html" 
+							   class="wcag-reference" 
+							   target="_blank" 
+							   rel="noopener noreferrer">
+								📖 WCAG 2.4.4 Link Purpose (In Context) (Level A)
+								<span aria-hidden="true">↗</span>
+							</a>
+						</div>
+					</div>
+					<div class="issue-body">
+						<div class="issue-section">
+							<h4 class="issue-section-title">Issue Description</h4>
+							<p class="issue-description">
+								The Footer component contains multiple navigation links using <code>href="#"</code> that do not navigate anywhere. These are decorative "dummy" links that confuse users and violate the semantic contract of the anchor element. Links should have meaningful destinations or should not be links at all.
+							</p>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">📍 Location</h4>
+							<div class="issue-location">
+								<span class="issue-location-icon">📄</span>
+								<span class="file-path">frontend/src/components/Footer.tsx</span>
+								<span style="color: var(--text-muted);">Lines 29-45, 55-71, 81-91</span>
+							</div>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">💥 Impact</h4>
+							<div class="impact-box">
+								<strong>Affected Users:</strong> All users, especially those using screen readers and keyboard navigation<br><br>
+								<strong>Severity:</strong> Users expect links to navigate somewhere. Dead links create confusion, break user expectations, and waste time. Screen reader users are particularly affected as they may navigate by links and encounter non-functional ones.
+							</div>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">✅ Recommended Fix</h4>
+							<details>
+								<summary>View Code Examples & Options</summary>
+								<div class="details-content">
+									<div class="code-comparison">
+										<div class="code-block">
+											<div class="code-block-header">
+												<span class="code-block-label code-label-before">
+													❌ Before (Violates WCAG)
+												</span>
+											</div>
+											<div class="code-content">
+<pre><code><span class="code-comment">// Footer.tsx - Lines 29-45</span>
+<span class="code-tag">&lt;a</span>
+  <span class="code-attribute">href</span>=<span class="code-string" style="background: rgba(220, 38, 38, 0.2);">"#"</span>
+  <span class="code-attribute">className</span>=<span class="code-string">"text-gray-400 
+    hover:text-white transition-colors"</span>
+<span class="code-tag">&gt;</span>
+  About Us
+<span class="code-tag">&lt;/a&gt;</span></code></pre>
+											</div>
+										</div>
+
+										<div class="code-block">
+											<div class="code-block-header">
+												<span class="code-block-label code-label-after">
+													✅ Option 1: Real Links
+												</span>
+											</div>
+											<div class="code-content">
+<pre><code><span class="code-comment">// Use React Router or actual URLs</span>
+<span class="code-tag">&lt;Link</span>
+  <span class="code-attribute">to</span>=<span class="code-string" style="background: rgba(16, 185, 129, 0.2);">"/about"</span>
+  <span class="code-attribute">className</span>=<span class="code-string">"text-gray-400 
+    hover:text-white transition-colors"</span>
+<span class="code-tag">&gt;</span>
+  About Us
+<span class="code-tag">&lt;/Link&gt;</span></code></pre>
+											</div>
+										</div>
+									</div>
+
+									<div class="code-block" style="margin-top: var(--space-md);">
+										<div class="code-block-header">
+											<span class="code-block-label code-label-after">
+												✅ Option 2: Remove Non-Functional Links
+											</span>
+										</div>
+										<div class="code-content">
+<pre><code><span class="code-comment">// If links are placeholders, use styled text instead</span>
+<span class="code-tag">&lt;span</span>
+  <span class="code-attribute">className</span>=<span class="code-string">"text-gray-400"</span>
+<span class="code-tag">&gt;</span>
+  About Us
+<span class="code-tag">&lt;/span&gt;</span>
+
+<span class="code-comment">// Or remove the section entirely until ready</span></code></pre>
+										</div>
+									</div>
+
+									<p style="margin-top: var(--space-md); color: var(--text-secondary);">
+										<strong>Best Practice:</strong> Only include navigation elements that are functional. If implementing gradually, hide incomplete sections rather than presenting non-functional links.
+									</p>
+								</div>
+							</details>
+						</div>
+					</div>
+				</article>
+
+				<!-- Issue 3: Non-text Content -->
+				<article class="issue-card" data-severity="critical">
+					<div class="issue-header">
+						<span class="severity-badge severity-critical">
+							🔴 Critical
+						</span>
+						<div class="issue-header-content">
+							<h3 class="issue-title">Loading Spinner Missing Text Alternative</h3>
+							<a href="https://www.w3.org/WAI/WCAG22/Understanding/non-text-content.html" 
+							   class="wcag-reference" 
+							   target="_blank" 
+							   rel="noopener noreferrer">
+								📖 WCAG 1.1.1 Non-text Content (Level A)
+								<span aria-hidden="true">↗</span>
+							</a>
+						</div>
+					</div>
+					<div class="issue-body">
+						<div class="issue-section">
+							<h4 class="issue-section-title">Issue Description</h4>
+							<p class="issue-description">
+								The Products component displays a loading spinner without any text alternative or ARIA attributes. Screen reader users have no indication that content is loading, creating confusion about whether the application is working or frozen.
+							</p>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">📍 Location</h4>
+							<div class="issue-location">
+								<span class="issue-location-icon">📄</span>
+								<span class="file-path">frontend/src/components/Products.tsx</span>
+								<span style="color: var(--text-muted);">Line 82</span>
+							</div>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">💥 Impact</h4>
+							<div class="impact-box">
+								<strong>Affected Users:</strong> Screen reader users, users with cognitive disabilities<br><br>
+								<strong>Severity:</strong> Users cannot perceive that products are loading, leading to confusion about application state. May result in users thinking the page is broken or leaving before content loads.
+							</div>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">✅ Recommended Fix</h4>
+							<details>
+								<summary>View Code Examples</summary>
+								<div class="details-content">
+									<div class="code-comparison">
+										<div class="code-block">
+											<div class="code-block-header">
+												<span class="code-block-label code-label-before">
+													❌ Before (Violates WCAG)
+												</span>
+											</div>
+											<div class="code-content">
+<pre><code><span class="code-comment">// Products.tsx - Line 82</span>
+<span class="code-keyword">if</span> (isLoading) {
+  <span class="code-keyword">return</span> (
+    <span class="code-tag">&lt;div</span> <span class="code-attribute">className</span>=<span class="code-string">"text-center"</span><span class="code-tag">&gt;</span>
+      <span class="code-tag">&lt;div</span> <span class="code-attribute">className</span>=<span class="code-string">"spinner"</span><span class="code-tag">&gt;&lt;/div&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+  );
+}</code></pre>
+											</div>
+										</div>
+
+										<div class="code-block">
+											<div class="code-block-header">
+												<span class="code-block-label code-label-after">
+													✅ After (WCAG Compliant)
+												</span>
+											</div>
+											<div class="code-content">
+<pre><code><span class="code-comment">// Products.tsx - Line 82</span>
+<span class="code-keyword">if</span> (isLoading) {
+  <span class="code-keyword">return</span> (
+    <span class="code-tag">&lt;div</span> 
+      <span class="code-attribute">className</span>=<span class="code-string">"text-center"</span>
+      <span class="code-attribute" style="background: rgba(16, 185, 129, 0.2);">role</span>=<span class="code-string" style="background: rgba(16, 185, 129, 0.2);">"status"</span>
+      <span class="code-attribute" style="background: rgba(16, 185, 129, 0.2);">aria-live</span>=<span class="code-string" style="background: rgba(16, 185, 129, 0.2);">"polite"</span>
+    <span class="code-tag">&gt;</span>
+      <span class="code-tag">&lt;div</span> 
+        <span class="code-attribute">className</span>=<span class="code-string">"spinner"</span>
+        <span class="code-attribute" style="background: rgba(16, 185, 129, 0.2);">aria-label</span>=<span class="code-string" style="background: rgba(16, 185, 129, 0.2);">"Loading products"</span>
+      <span class="code-tag">&gt;&lt;/div&gt;</span>
+      <span class="code-tag">&lt;span</span> <span class="code-attribute">className</span>=<span class="code-string">"sr-only"</span><span class="code-tag">&gt;</span>
+        Loading products, please wait...
+      <span class="code-tag">&lt;/span&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+  );
+}</code></pre>
+											</div>
+										</div>
+									</div>
+									<p style="margin-top: var(--space-md); color: var(--text-secondary);">
+										<strong>Key Additions:</strong> <code>role="status"</code> creates a status region, <code>aria-live="polite"</code> announces changes to screen readers, and visually hidden text provides explicit loading message.
+									</p>
+								</div>
+							</details>
+						</div>
+					</div>
+				</article>
+
+				<!-- Issue 4: Status Messages -->
+				<article class="issue-card" data-severity="important">
+					<div class="issue-header">
+						<span class="severity-badge severity-important">
+							🟡 Important
+						</span>
+						<div class="issue-header-content">
+							<h3 class="issue-title">Browser Alert() Used for Cart Confirmation</h3>
+							<a href="https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html" 
+							   class="wcag-reference" 
+							   target="_blank" 
+							   rel="noopener noreferrer">
+								📖 WCAG 4.1.3 Status Messages (Level AA)
+								<span aria-hidden="true">↗</span>
+							</a>
+						</div>
+					</div>
+					<div class="issue-body">
+						<div class="issue-section">
+							<h4 class="issue-section-title">Issue Description</h4>
+							<p class="issue-description">
+								The Products component uses JavaScript's <code>alert()</code> function to confirm items added to cart. While technically announced by some screen readers, <code>alert()</code> blocks all interaction, is not standard for web applications, and provides poor user experience. It does not meet modern accessibility standards for status messages.
+							</p>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">📍 Location</h4>
+							<div class="issue-location">
+								<span class="issue-location-icon">📄</span>
+								<span class="file-path">frontend/src/components/Products.tsx</span>
+								<span style="color: var(--text-muted);">Line 66</span>
+							</div>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">💥 Impact</h4>
+							<div class="impact-box">
+								<strong>Affected Users:</strong> All users, especially screen reader users and keyboard users<br><br>
+								<strong>Severity:</strong> Blocks all interaction until dismissed. Screen reader announcement is inconsistent across browsers. Breaks user flow and feels unprofessional. Status messages should be non-blocking and use ARIA live regions.
+							</div>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">✅ Recommended Fix</h4>
+							<details>
+								<summary>View Code Examples</summary>
+								<div class="details-content">
+									<div class="code-comparison">
+										<div class="code-block">
+											<div class="code-block-header">
+												<span class="code-block-label code-label-before">
+													❌ Before (Violates WCAG AA)
+												</span>
+											</div>
+											<div class="code-content">
+<pre><code><span class="code-comment">// Products.tsx - Line 66</span>
+<span class="code-keyword">const</span> <span class="code-function">handleAddToCart</span> = <span class="code-keyword">async</span> (product) => {
+  <span class="code-keyword">await</span> <span class="code-function">addToCart</span>(product);
+  <span style="background: rgba(245, 158, 11, 0.2);"><span class="code-function">alert</span>(<span class="code-string">'Item added to cart!'</span>);</span>
+};</code></pre>
+											</div>
+										</div>
+
+										<div class="code-block">
+											<div class="code-block-header">
+												<span class="code-block-label code-label-after">
+													✅ After (WCAG Compliant)
+												</span>
+											</div>
+											<div class="code-content">
+<pre><code><span class="code-comment">// Products.tsx - Add state for toast notification</span>
+<span class="code-keyword">const</span> [toast, setToast] = <span class="code-function">useState</span>(<span class="code-keyword">null</span>);
+
+<span class="code-keyword">const</span> <span class="code-function">handleAddToCart</span> = <span class="code-keyword">async</span> (product) => {
+  <span class="code-keyword">await</span> <span class="code-function">addToCart</span>(product);
+  <span style="background: rgba(16, 185, 129, 0.2);"><span class="code-function">setToast</span>(<span class="code-string">`${product.name} added to cart!`</span>);</span>
+  <span class="code-function">setTimeout</span>(() => <span class="code-function">setToast</span>(<span class="code-keyword">null</span>), 3000);
+};
+
+<span class="code-comment">// In JSX, add toast component:</span>
+{toast && (
+  <span class="code-tag">&lt;div</span>
+    <span class="code-attribute" style="background: rgba(16, 185, 129, 0.2);">role</span>=<span class="code-string" style="background: rgba(16, 185, 129, 0.2);">"status"</span>
+    <span class="code-attribute" style="background: rgba(16, 185, 129, 0.2);">aria-live</span>=<span class="code-string" style="background: rgba(16, 185, 129, 0.2);">"polite"</span>
+    <span class="code-attribute">className</span>=<span class="code-string">"toast-notification"</span>
+  <span class="code-tag">&gt;</span>
+    ✓ {toast}
+  <span class="code-tag">&lt;/div&gt;</span>
+)}</code></pre>
+											</div>
+										</div>
+									</div>
+									<p style="margin-top: var(--space-md); color: var(--text-secondary);">
+										<strong>Benefits:</strong> Non-blocking notification, automatically announced by screen readers via <code>aria-live="polite"</code>, modern UX with auto-dismiss, maintains user context and focus.
+									</p>
+								</div>
+							</details>
+						</div>
+					</div>
+				</article>
+
+				<!-- Issue 5: Contrast -->
+				<article class="issue-card" data-severity="important">
+					<div class="issue-header">
+						<span class="severity-badge severity-important">
+							🟡 Important
+						</span>
+						<div class="issue-header-content">
+							<h3 class="issue-title">Insufficient Scrollbar Contrast in Light Mode</h3>
+							<a href="https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html" 
+							   class="wcag-reference" 
+							   target="_blank" 
+							   rel="noopener noreferrer">
+								📖 WCAG 1.4.11 Non-text Contrast (Level AA)
+								<span aria-hidden="true">↗</span>
+							</a>
+						</div>
+					</div>
+					<div class="issue-body">
+						<div class="issue-section">
+							<h4 class="issue-section-title">Issue Description</h4>
+							<p class="issue-description">
+								Light mode custom scrollbar styling uses <code>#76B852</code> (primary green) for the thumb against <code>#f1f1f1</code> (track). This creates a contrast ratio of approximately 2.8:1, which fails WCAG 2.2's requirement of 3:1 for UI components and graphical objects.
+							</p>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">📍 Location</h4>
+							<div class="issue-location">
+								<span class="issue-location-icon">📄</span>
+								<span class="file-path">frontend/src/index.css</span>
+								<span style="color: var(--text-muted);">Lines 40-43</span>
+							</div>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">💥 Impact</h4>
+							<div class="impact-box">
+								<strong>Affected Users:</strong> Users with low vision, color blindness, or viewing in bright ambient light<br><br>
+								<strong>Severity:</strong> Scrollbar may be difficult to perceive, making scrolling discovery and control challenging. Affects overall navigation experience on longer pages.
+							</div>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">✅ Recommended Fix</h4>
+							<details>
+								<summary>View Code Examples</summary>
+								<div class="details-content">
+									<div class="code-comparison">
+										<div class="code-block">
+											<div class="code-block-header">
+												<span class="code-block-label code-label-before">
+													❌ Before (Contrast 2.8:1)
+												</span>
+											</div>
+											<div class="code-content">
+<pre><code><span class="code-comment">/* index.css - Lines 40-43 */</span>
+<span class="code-keyword">::-webkit-scrollbar-thumb</span> {
+  <span class="code-attribute">background</span>: <span style="background: rgba(245, 158, 11, 0.2);">#76B852</span>;
+  <span class="code-attribute">border-radius</span>: 10px;
+}
+
+<span class="code-keyword">::-webkit-scrollbar-track</span> {
+  <span class="code-attribute">background</span>: #f1f1f1;
+}</code></pre>
+											</div>
+										</div>
+
+										<div class="code-block">
+											<div class="code-block-header">
+												<span class="code-block-label code-label-after">
+													✅ After (Contrast 3.5:1+)
+												</span>
+											</div>
+											<div class="code-content">
+<pre><code><span class="code-comment">/* index.css - Lines 40-43 */</span>
+<span class="code-keyword">::-webkit-scrollbar-thumb</span> {
+  <span class="code-attribute">background</span>: <span style="background: rgba(16, 185, 129, 0.2);">#5A8E3E</span>; <span class="code-comment">/* Darker for 3.5:1 contrast */</span>
+  <span class="code-attribute">border-radius</span>: 10px;
+}
+
+<span class="code-keyword">::-webkit-scrollbar-thumb:hover</span> {
+  <span class="code-attribute">background</span>: #4A7A2E; <span class="code-comment">/* Even darker on hover */</span>
+}
+
+<span class="code-keyword">::-webkit-scrollbar-track</span> {
+  <span class="code-attribute">background</span>: #f1f1f1;
+}</code></pre>
+											</div>
+										</div>
+									</div>
+									<p style="margin-top: var(--space-md); color: var(--text-secondary);">
+										<strong>Color Options:</strong> <code>#5A8E3E</code> (3.5:1), <code>#528A36</code> (3.8:1), or <code>#4A7A2E</code> (4.2:1). All maintain brand color while meeting contrast requirements.
+									</p>
+								</div>
+							</details>
+						</div>
+					</div>
+				</article>
+
+				<!-- Issue 6: Error Identification -->
+				<article class="issue-card" data-severity="important">
+					<div class="issue-header">
+						<span class="severity-badge severity-important">
+							🟡 Important
+						</span>
+						<div class="issue-header-content">
+							<h3 class="issue-title">Insecure Error Rendering with dangerouslySetInnerHTML</h3>
+							<a href="https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html" 
+							   class="wcag-reference" 
+							   target="_blank" 
+							   rel="noopener noreferrer">
+								📖 WCAG 3.3.1 Error Identification (Level A)
+								<span aria-hidden="true">↗</span>
+							</a>
+						</div>
+					</div>
+					<div class="issue-body">
+						<div class="issue-section">
+							<h4 class="issue-section-title">Issue Description</h4>
+							<p class="issue-description">
+								The Login component renders error messages using <code>dangerouslySetInnerHTML</code>, creating an XSS (Cross-Site Scripting) vulnerability. Additionally, errors may not be properly announced to screen readers or associated with form fields. This violates both accessibility and security best practices.
+							</p>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">📍 Location</h4>
+							<div class="issue-location">
+								<span class="issue-location-icon">📄</span>
+								<span class="file-path">frontend/src/components/Login.tsx</span>
+								<span style="color: var(--text-muted);">Line 48</span>
+							</div>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">💥 Impact</h4>
+							<div class="impact-box">
+								<strong>Affected Users:</strong> All users (security), screen reader users (accessibility)<br><br>
+								<strong>Severity:</strong> <strong>Security Risk:</strong> Malicious code could be injected through error messages. <strong>Accessibility:</strong> Errors may not be announced to screen readers or associated with the correct form fields.
+							</div>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">✅ Recommended Fix</h4>
+							<details>
+								<summary>View Code Examples</summary>
+								<div class="details-content">
+									<div class="code-comparison">
+										<div class="code-block">
+											<div class="code-block-header">
+												<span class="code-block-label code-label-before">
+													❌ Before (Security & A11y Issues)
+												</span>
+											</div>
+											<div class="code-content">
+<pre><code><span class="code-comment">// Login.tsx - Line 48</span>
+{error && (
+  <span class="code-tag">&lt;div</span> 
+    <span class="code-attribute">className</span>=<span class="code-string">"error-message"</span>
+    <span style="background: rgba(220, 38, 38, 0.2);"><span class="code-attribute">dangerouslySetInnerHTML</span></span>={{
+      <span class="code-attribute">__html</span>: error
+    }}
+  <span class="code-tag">/&gt;</span>
+)}</code></pre>
+											</div>
+										</div>
+
+										<div class="code-block">
+											<div class="code-block-header">
+												<span class="code-block-label code-label-after">
+													✅ After (Secure & Accessible)
+												</span>
+											</div>
+											<div class="code-content">
+<pre><code><span class="code-comment">// Login.tsx - Line 48</span>
+{error && (
+  <span class="code-tag">&lt;div</span>
+    <span class="code-attribute">className</span>=<span class="code-string">"error-message"</span>
+    <span class="code-attribute" style="background: rgba(16, 185, 129, 0.2);">role</span>=<span class="code-string" style="background: rgba(16, 185, 129, 0.2);">"alert"</span>
+    <span class="code-attribute" style="background: rgba(16, 185, 129, 0.2);">aria-live</span>=<span class="code-string" style="background: rgba(16, 185, 129, 0.2);">"assertive"</span>
+  <span class="code-tag">&gt;</span>
+    <span class="code-comment">{/* React children - safe from XSS */}</span>
+    {error}
+  <span class="code-tag">&lt;/div&gt;</span>
+)}
+
+<span class="code-comment">// Associate error with field using aria-describedby</span>
+<span class="code-tag">&lt;input</span>
+  <span class="code-attribute">type</span>=<span class="code-string">"email"</span>
+  <span class="code-attribute" style="background: rgba(16, 185, 129, 0.2);">aria-invalid</span>={error ? <span class="code-string">"true"</span> : <span class="code-string">"false"</span>}
+  <span class="code-attribute" style="background: rgba(16, 185, 129, 0.2);">aria-describedby</span>={error ? <span class="code-string">"login-error"</span> : undefined}
+<span class="code-tag">/&gt;</span></code></pre>
+											</div>
+										</div>
+									</div>
+									<p style="margin-top: var(--space-md); color: var(--text-secondary);">
+										<strong>Key Improvements:</strong> React children instead of HTML injection (prevents XSS), <code>role="alert"</code> for immediate screen reader announcement, <code>aria-describedby</code> associates error with input field.
+									</p>
+								</div>
+							</details>
+						</div>
+					</div>
+				</article>
+
+				<!-- Issue 7: Info and Relationships -->
+				<article class="issue-card" data-severity="enhancement">
+					<div class="issue-header">
+						<span class="severity-badge severity-enhancement">
+							🟢 Enhancement
+						</span>
+						<div class="issue-header-content">
+							<h3 class="issue-title">Hero Image Alt Text May Be Too Generic</h3>
+							<a href="https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html" 
+							   class="wcag-reference" 
+							   target="_blank" 
+							   rel="noopener noreferrer">
+								📖 WCAG 1.3.1 Info and Relationships (Level A)
+								<span aria-hidden="true">↗</span>
+							</a>
+						</div>
+					</div>
+					<div class="issue-body">
+						<div class="issue-section">
+							<h4 class="issue-section-title">Issue Description</h4>
+							<p class="issue-description">
+								The Welcome component includes a hero image that may have generic alt text. Alt text should convey the specific content and context of the image rather than generic descriptions. This is particularly important for hero images that set the tone and convey essential information.
+							</p>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">📍 Location</h4>
+							<div class="issue-location">
+								<span class="issue-location-icon">📄</span>
+								<span class="file-path">frontend/src/components/Welcome.tsx</span>
+								<span style="color: var(--text-muted);">Line 50 (approximate)</span>
+							</div>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">💥 Impact</h4>
+							<div class="impact-box">
+								<strong>Affected Users:</strong> Screen reader users, users with images disabled<br><br>
+								<strong>Severity:</strong> Moderate impact on user experience. Generic alt text provides less context and may not convey important branding or messaging. Screen reader users receive incomplete information about page content.
+							</div>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">✅ Recommended Fix</h4>
+							<details>
+								<summary>View Guidance & Examples</summary>
+								<div class="details-content">
+									<div class="code-comparison">
+										<div class="code-block">
+											<div class="code-block-header">
+												<span class="code-block-label" style="color: var(--color-important);">
+													⚠️ Generic (Less Helpful)
+												</span>
+											</div>
+											<div class="code-content">
+<pre><code><span class="code-tag">&lt;img</span>
+  <span class="code-attribute">src</span>=<span class="code-string">"/hero.jpg"</span>
+  <span class="code-attribute">alt</span>=<span class="code-string" style="background: rgba(245, 158, 11, 0.2);">"Hero image"</span>
+<span class="code-tag">/&gt;</span></code></pre>
+											</div>
+										</div>
+
+										<div class="code-block">
+											<div class="code-block-header">
+												<span class="code-block-label code-label-after">
+													✅ Descriptive (Informative)
+												</span>
+											</div>
+											<div class="code-content">
+<pre><code><span class="code-tag">&lt;img</span>
+  <span class="code-attribute">src</span>=<span class="code-string">"/hero.jpg"</span>
+  <span class="code-attribute">alt</span>=<span class="code-string" style="background: rgba(16, 185, 129, 0.2);">"Modern warehouse with organized 
+       inventory and automated systems"</span>
+<span class="code-tag">/&gt;</span>
+
+<span class="code-comment">// Or if decorative/redundant with heading:</span>
+<span class="code-tag">&lt;img</span>
+  <span class="code-attribute">src</span>=<span class="code-string">"/hero.jpg"</span>
+  <span class="code-attribute">alt</span>=<span class="code-string" style="background: rgba(16, 185, 129, 0.2);">""</span>
+  <span class="code-attribute">role</span>=<span class="code-string">"presentation"</span>
+<span class="code-tag">/&gt;</span></code></pre>
+											</div>
+										</div>
+									</div>
+									<p style="margin-top: var(--space-md); color: var(--text-secondary);">
+										<strong>Guidelines:</strong><br>
+										• Describe what's in the image, not that it's an image<br>
+										• Include relevant details that convey the message/mood<br>
+										• If purely decorative and adds no information, use empty alt (<code>alt=""</code>)<br>
+										• Keep concise but meaningful (usually under 125 characters)
+									</p>
+								</div>
+							</details>
+						</div>
+					</div>
+				</article>
+
+				<!-- Issue 8: Target Size -->
+				<article class="issue-card" data-severity="enhancement">
+					<div class="issue-header">
+						<span class="severity-badge severity-enhancement">
+							🟢 Enhancement
+						</span>
+						<div class="issue-header-content">
+							<h3 class="issue-title">Touch Targets May Be Below Minimum Size</h3>
+							<a href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html" 
+							   class="wcag-reference" 
+							   target="_blank" 
+							   rel="noopener noreferrer">
+								📖 WCAG 2.5.8 Target Size (Minimum) (Level AA)
+								<span aria-hidden="true">↗</span>
+							</a>
+						</div>
+					</div>
+					<div class="issue-body">
+						<div class="issue-section">
+							<h4 class="issue-section-title">Issue Description</h4>
+							<p class="issue-description">
+								Some interactive elements in the Navigation component (cart icon, theme toggle) may have touch targets smaller than the WCAG 2.2 minimum of 24×24 CSS pixels. Small targets are difficult to activate on touch devices and for users with motor impairments.
+							</p>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">📍 Location</h4>
+							<div class="issue-location">
+								<span class="issue-location-icon">📄</span>
+								<span class="file-path">frontend/src/components/Navigation.tsx</span>
+								<span style="color: var(--text-muted);">Cart icon, theme toggle buttons</span>
+							</div>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">💥 Impact</h4>
+							<div class="impact-box">
+								<strong>Affected Users:</strong> Mobile users, users with motor impairments, users with tremors<br><br>
+								<strong>Severity:</strong> Low to moderate. Small touch targets lead to accidental taps, frustration, and reduced usability on touch devices. May exclude users who have difficulty with precise movements.
+							</div>
+						</div>
+
+						<div class="issue-section">
+							<h4 class="issue-section-title">✅ Recommended Fix</h4>
+							<details>
+								<summary>View Code Examples & Verification</summary>
+								<div class="details-content">
+									<div class="code-comparison">
+										<div class="code-block">
+											<div class="code-block-header">
+												<span class="code-block-label" style="color: var(--color-important);">
+													⚠️ May Be Too Small
+												</span>
+											</div>
+											<div class="code-content">
+<pre><code><span class="code-comment">// Navigation.tsx - Icon buttons</span>
+<span class="code-tag">&lt;button</span>
+  <span class="code-attribute">className</span>=<span class="code-string" style="background: rgba(245, 158, 11, 0.2);">"p-2"</span> <span class="code-comment">// 8px + icon size</span>
+<span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;ShoppingCart</span> <span class="code-attribute">className</span>=<span class="code-string">"h-5 w-5"</span> <span class="code-tag">/&gt;</span>
+<span class="code-tag">&lt;/button&gt;</span>
+
+<span class="code-comment">// Total: ~8+20+8 = 36px width/height
+// If p-2 is actually 0.5rem (8px), total may be only 20px</span></code></pre>
+											</div>
+										</div>
+
+										<div class="code-block">
+											<div class="code-block-header">
+												<span class="code-block-label code-label-after">
+													✅ Meets Minimum (24×24px)
+												</span>
+											</div>
+											<div class="code-content">
+<pre><code><span class="code-comment">// Navigation.tsx - Ensure 24×24 minimum</span>
+<span class="code-tag">&lt;button</span>
+  <span class="code-attribute">className</span>=<span class="code-string" style="background: rgba(16, 185, 129, 0.2);">"p-3 rounded-lg"</span> <span class="code-comment">// 12px + icon</span>
+  <span class="code-attribute">style</span>={{ <span class="code-attribute">minWidth</span>: <span class="code-string">'44px'</span>, <span class="code-attribute">minHeight</span>: <span class="code-string">'44px'</span> }}
+<span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;ShoppingCart</span> <span class="code-attribute">className</span>=<span class="code-string">"h-6 w-6"</span> <span class="code-tag">/&gt;</span>
+<span class="code-tag">&lt;/button&gt;</span>
+
+<span class="code-comment">// Apple Human Interface: 44×44pt
+// Android Material: 48×48dp
+// WCAG 2.2 minimum: 24×24px</span></code></pre>
+											</div>
+										</div>
+									</div>
+
+									<div class="code-block" style="margin-top: var(--space-md);">
+										<div class="code-block-header">
+											<span class="code-block-label code-label-after">
+												🔍 How to Verify
+											</span>
+										</div>
+										<div class="code-content">
+<pre><code><span class="code-comment">// Browser DevTools:</span>
+<span class="code-comment">// 1. Inspect element</span>
+<span class="code-comment">// 2. Check Computed styles for width/height</span>
+<span class="code-comment">// 3. Ensure both dimensions ≥ 24px</span>
+
+<span class="code-comment">// Or add to your component tests:</span>
+<span class="code-function">test</span>(<span class="code-string">'interactive elements meet size minimums'</span>, () => {
+  <span class="code-keyword">const</span> buttons = <span class="code-function">screen.getAllByRole</span>(<span class="code-string">'button'</span>);
+  buttons.<span class="code-function">forEach</span>(btn => {
+    <span class="code-keyword">const</span> rect = btn.<span class="code-function">getBoundingClientRect</span>();
+    <span class="code-function">expect</span>(rect.width).<span class="code-function">toBeGreaterThanOrEqual</span>(24);
+    <span class="code-function">expect</span>(rect.height).<span class="code-function">toBeGreaterThanOrEqual</span>(24);
+  });
+});</code></pre>
+										</div>
+									</div>
+
+									<p style="margin-top: var(--space-md); color: var(--text-secondary);">
+										<strong>Best Practice:</strong> Target 44×44px for optimal touch usability, meeting both WCAG 2.2 (24px minimum) and platform design guidelines (Apple 44pt, Android 48dp).
+									</p>
+								</div>
+							</details>
+						</div>
+					</div>
+				</article>
+
+			</div>
+		</section>
+
+		<!-- Recommendations Summary -->
+		<section aria-labelledby="recommendations-heading">
+			<h2 id="recommendations-heading">Priority Recommendations</h2>
+			<div class="recommendations-list">
+				<div class="recommendation-item">
+					<h4>1. 🚨 Fix Critical Level A Violations Immediately</h4>
+					<p>
+						These issues prevent WCAG Level A conformance and create significant barriers:
+					</p>
+					<ul>
+						<li>Remove <code>focus:outline-none</code> from all interactive elements (Navigation.tsx)</li>
+						<li>Replace <code>href="#"</code> links with functional routes or remove them (Footer.tsx)</li>
+						<li>Add ARIA attributes and text alternatives to loading spinner (Products.tsx)</li>
+					</ul>
+				</div>
+
+				<div class="recommendation-item">
+					<h4>2. ⚠️ Address Level AA Violations for Target Compliance</h4>
+					<p>
+						Required for WCAG 2.2 Level AA conformance:
+					</p>
+					<ul>
+						<li>Replace <code>alert()</code> with ARIA live region toast notifications (Products.tsx)</li>
+						<li>Increase scrollbar thumb contrast to 3:1 minimum (index.css)</li>
+						<li>Remove <code>dangerouslySetInnerHTML</code> and use proper error association (Login.tsx)</li>
+					</ul>
+				</div>
+
+				<div class="recommendation-item">
+					<h4>3. 🎯 Implement Enhancements for Better UX</h4>
+					<p>
+						Improve overall accessibility and usability:
+					</p>
+					<ul>
+						<li>Review and improve alt text specificity for all images</li>
+						<li>Verify all touch targets meet 24×24px minimum (aim for 44×44px)</li>
+						<li>Add skip navigation link for keyboard users</li>
+						<li>Ensure form labels are programmatically associated with inputs</li>
+					</ul>
+				</div>
+
+				<div class="recommendation-item">
+					<h4>4. 🧪 Establish Accessibility Testing Process</h4>
+					<p>
+						Prevent future violations:
+					</p>
+					<ul>
+						<li>Integrate automated accessibility testing (axe-core, jest-axe)</li>
+						<li>Add Playwright accessibility tests to CI/CD pipeline</li>
+						<li>Conduct manual keyboard navigation testing for all new features</li>
+						<li>Perform screen reader testing (NVDA, JAWS, VoiceOver)</li>
+						<li>Include accessibility acceptance criteria in user stories</li>
+					</ul>
+				</div>
+
+				<div class="recommendation-item">
+					<h4>5. 📚 Document Accessibility Standards</h4>
+					<p>
+						Create team guidelines:
+					</p>
+					<ul>
+						<li>Document approved focus indicator patterns</li>
+						<li>Create library of accessible component patterns</li>
+						<li>Establish color contrast guidelines (3:1 for UI, 4.5:1 for text)</li>
+						<li>Define ARIA usage standards and when to avoid/use ARIA</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<!-- Resources -->
+		<section aria-labelledby="resources-heading">
+			<h2 id="resources-heading">Helpful Resources</h2>
+			<div class="recommendations-list">
+				<div class="recommendation-item">
+					<h4>🔗 Official Standards & Guidelines</h4>
+					<ul>
+						<li><a href="https://www.w3.org/WAI/WCAG22/quickref/" target="_blank" rel="noopener noreferrer">WCAG 2.2 Quick Reference</a></li>
+						<li><a href="https://www.w3.org/WAI/WCAG22/Understanding/" target="_blank" rel="noopener noreferrer">Understanding WCAG 2.2</a></li>
+						<li><a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank" rel="noopener noreferrer">ARIA Authoring Practices Guide (APG)</a></li>
+						<li><a href="https://www.w3.org/TR/wai-aria-1.2/" target="_blank" rel="noopener noreferrer">ARIA 1.2 Specification</a></li>
+					</ul>
+				</div>
+
+				<div class="recommendation-item">
+					<h4>🛠️ Testing Tools</h4>
+					<ul>
+						<li><a href="https://www.deque.com/axe/devtools/" target="_blank" rel="noopener noreferrer">axe DevTools Browser Extension</a></li>
+						<li><a href="https://wave.webaim.org/" target="_blank" rel="noopener noreferrer">WAVE Web Accessibility Evaluator</a></li>
+						<li><a href="https://github.com/pa11y/pa11y" target="_blank" rel="noopener noreferrer">Pa11y - Automated Testing</a></li>
+						<li><a href="https://www.nvaccess.org/" target="_blank" rel="noopener noreferrer">NVDA Screen Reader (Free)</a></li>
+					</ul>
+				</div>
+
+				<div class="recommendation-item">
+					<h4>📖 React & Framework Specific</h4>
+					<ul>
+						<li><a href="https://react.dev/learn/accessibility" target="_blank" rel="noopener noreferrer">React Accessibility Documentation</a></li>
+						<li><a href="https://github.com/jsx-eslint/eslint-plugin-jsx-a11y" target="_blank" rel="noopener noreferrer">eslint-plugin-jsx-a11y</a></li>
+						<li><a href="https://github.com/nickcolley/jest-axe" target="_blank" rel="noopener noreferrer">jest-axe for Unit Testing</a></li>
+						<li><a href="https://playwright.dev/docs/accessibility-testing" target="_blank" rel="noopener noreferrer">Playwright Accessibility Testing</a></li>
+					</ul>
+				</div>
+			</div>
+		</section>
+
+	</main>
+
+	<!-- Footer -->
+	<footer>
+		<p>
+			Generated by OctoCAT Supply Chain A11y Audit System | February 6, 2026<br>
+			Standard: WCAG 2.2 Level AA | Analysis Focus: Light Theme
+		</p>
+		<p style="margin-top: var(--space-sm); font-size: var(--font-size-xs);">
+			This report should be reviewed alongside actual user testing with assistive technologies.<br>
+			Contact your accessibility team for guidance on remediation priorities.
+		</p>
+	</footer>
+
+	<!-- ============================================
+	     JAVASCRIPT FOR INTERACTIVITY
+	     ============================================ -->
+	<script>
+		// Filter functionality
+		const filterButtons = document.querySelectorAll('.filter-btn');
+		const issueCards = document.querySelectorAll('.issue-card');
+
+		filterButtons.forEach(button => {
+			button.addEventListener('click', () => {
+				const filter = button.dataset.filter;
+
+				// Update active state
+				filterButtons.forEach(btn => {
+					btn.classList.remove('active');
+					btn.setAttribute('aria-pressed', 'false');
+				});
+				button.classList.add('active');
+				button.setAttribute('aria-pressed', 'true');
+
+				// Filter issues
+				issueCards.forEach(card => {
+					const severity = card.dataset.severity;
+					if (filter === 'all' || severity === filter) {
+						card.style.display = 'block';
+						// Smooth fade in
+						card.style.opacity = '0';
+						setTimeout(() => {
+							card.style.transition = 'opacity 0.3s ease';
+							card.style.opacity = '1';
+						}, 10);
+					} else {
+						card.style.display = 'none';
+					}
+				});
+
+				// Announce filter change to screen readers
+				const announcement = document.createElement('div');
+				announcement.setAttribute('role', 'status');
+				announcement.setAttribute('aria-live', 'polite');
+				announcement.className = 'sr-only';
+				announcement.textContent = `Showing ${filter === 'all' ? 'all' : filter} issues`;
+				document.body.appendChild(announcement);
+				setTimeout(() => announcement.remove(), 1000);
+			});
+		});
+
+		// Copy code button functionality
+		document.querySelectorAll('.copy-button').forEach(button => {
+			button.addEventListener('click', async () => {
+				const codeBlock = button.closest('.code-block').querySelector('.code-content');
+				const code = codeBlock.textContent;
+
+				try {
+					await navigator.clipboard.writeText(code);
+					const originalText = button.textContent;
+					button.textContent = '✓ Copied!';
+					button.style.borderColor = 'var(--color-success)';
+					button.style.color = 'var(--color-success)';
+
+					setTimeout(() => {
+						button.textContent = originalText;
+						button.style.borderColor = '';
+						button.style.color = '';
+					}, 2000);
+				} catch (err) {
+					console.error('Failed to copy code:', err);
+					button.textContent = '✗ Failed';
+					setTimeout(() => {
+						button.textContent = 'Copy';
+					}, 2000);
+				}
+			});
+		});
+
+		// Smooth scroll for anchor links
+		document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+			anchor.addEventListener('click', function (e) {
+				const href = this.getAttribute('href');
+				if (href !== '#' && document.querySelector(href)) {
+					e.preventDefault();
+					document.querySelector(href).scrollIntoView({
+						behavior: 'smooth',
+						block: 'start'
+					});
+				}
+			});
+		});
+
+		// Collapsible details tracking (for analytics if needed)
+		document.querySelectorAll('details').forEach(details => {
+			details.addEventListener('toggle', () => {
+				if (details.open) {
+					// Track which fixes users are viewing
+					console.log('Expanded:', details.querySelector('summary').textContent);
+				}
+			});
+		});
+
+		// Print preparation
+		window.addEventListener('beforeprint', () => {
+			// Expand all details for printing
+			document.querySelectorAll('details').forEach(details => {
+				details.setAttribute('open', '');
+			});
+		});
+
+		// Keyboard shortcuts
+		document.addEventListener('keydown', (e) => {
+			// Alt/Option + 1-4 for quick filters
+			if ((e.altKey || e.metaKey) && e.key >= '1' && e.key <= '4') {
+				e.preventDefault();
+				const filterIndex = parseInt(e.key) - 1;
+				filterButtons[filterIndex]?.click();
+			}
+
+			// Ctrl/Cmd + P for print
+			if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+				// Let browser handle print
+			}
+		});
+
+		// Accessibility: Announce page load completion
+		window.addEventListener('load', () => {
+			const announcement = document.createElement('div');
+			announcement.setAttribute('role', 'status');
+			announcement.setAttribute('aria-live', 'polite');
+			announcement.className = 'sr-only';
+			announcement.textContent = 'Accessibility audit report loaded. Use filter buttons to navigate by severity.';
+			document.body.appendChild(announcement);
+			setTimeout(() => announcement.remove(), 3000);
+		});
+	</script>
+</body>
+</html>

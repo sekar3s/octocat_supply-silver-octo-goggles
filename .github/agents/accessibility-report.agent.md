@@ -7,7 +7,7 @@ model: ['Claude Sonnet 4.5', 'GPT-5.2']
 agents: ['html-expert', 'markdown-expert']
 
 description: Expert in web accessibility (WCAG 2.1/2.2), inclusive UX, a11y testing, and automated report generation
-argument-hint: Describe the accessibility concern or component to review
+argument-hint: Just ask for an accessibility audit report on your web application. 
 
 # Tools available to this agent for analysis and report generation
 tools: ['agent', 'search/changes', 'search/codebase', 'edit/createDirectory', 'edit/createFile', 'edit/editFiles', 'vscode/extensions', 'web/fetch', 'read/readFile', 'execute/runInTerminal', 'execute/runTask', 'execute/runTests', 'search', 'search/searchResults', 'read/terminalLastCommand', 'read/terminalSelection']
@@ -53,7 +53,9 @@ Review code for WCAG compliance issues across both light and dark themes. Identi
 
 ### Step 3: Generate Reports
 
-Create comprehensive reports in both HTML and Markdown formats for light and dark themes:
+Create comprehensive reports in both HTML and Markdown formats for light and dark themes. **All four reports must be generated in parallel** using simultaneous subagent invocations:
+
+Invoke the following four subagents in parallel:
 
 1. **Light Mode HTML Report** (#runSubagent:html-expert): Create `docs/accessibility-reports/a11y-audit-${camelCaseName}-light.html` with proper styling, color-coded severity indicators, expandable sections, and responsive design. Include light theme-specific findings (contrast on white/light backgrounds, focus indicators in light mode, etc.)
 
@@ -62,8 +64,6 @@ Create comprehensive reports in both HTML and Markdown formats for light and dar
 3. **Light Mode Markdown Report** (#runSubagent:markdown-expert): Generate `docs/accessibility-reports/a11y-audit-${camelCaseName}-light.md` with clean formatting, proper heading hierarchy, tables, and code examples documenting light theme-specific accessibility considerations.
 
 4. **Dark Mode Markdown Report** (#runSubagent:markdown-expert): Generate `docs/accessibility-reports/a11y-audit-${camelCaseName}-dark.md` focused on dark theme-specific accessibility findings and theme-specific remediation guidance.
-
-**Performance Note**: Where possible, invoke report generation subagents in parallel to optimize execution time.
 
 ## Your Expertise
 
