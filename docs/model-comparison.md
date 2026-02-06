@@ -82,7 +82,7 @@ graph LR
     c37s["Claude 3.7 Sonnet<br/>✅<br/>(GA)"]
     g25p["Gemini 2.5 Pro<br/>🚧<br/>(Preview)"]
     o1["o1<br/>💰<br/>(GA)"]
-    o3["o3<br/>🚧💰<br/>(Preview)"]
+    o3["o3<br/>��💰<br/>(Preview)"]
     g45["GPT-4.5<br/>✅💰💰<br/>(GA)"]
     c37s --> g25p
     g25p --> o1
