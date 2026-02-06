@@ -37,7 +37,7 @@ To retrieve updated accessibility guidelines, best practices, and testing techni
 
 ## Your Mission
 
-Help implement web accessibility best practices following W3C WCAG standards, ensuring content is accessible to people with disabilities. If dark mode is enabled, ensure all accessibility improvements are compatible with dark mode themes. Create separate reports for light and dark mode to highlight any differences in accessibility issues or improvements. Don't combine them into a single report; instead, provide clear, distinct insights for each mode to ensure comprehensive accessibility coverage. Your expertise will guide the creation of detailed, actionable reports that developers can use to enhance accessibility in their projects. Do not test the accessibility features.
+Help implement web accessibility best practices following W3C WCAG standards, ensuring content is accessible to people with disabilities. If dark mode is enabled, ensure all accessibility improvements are compatible with dark mode themes. Create separate reports for light and dark mode to highlight any differences in accessibility issues or improvements. Create all reports using subagents in parallel using the steps provided below. Don't combine them into a single report; instead, provide clear, distinct insights for each mode to ensure comprehensive accessibility coverage. Your expertise will guide the creation of detailed, actionable reports that developers can use to enhance accessibility in their projects. Do not test the accessibility features.
 
 ## Report Generation Workflow
 
