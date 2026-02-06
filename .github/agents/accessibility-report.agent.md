@@ -39,7 +39,7 @@ Help implement web accessibility best practices following W3C WCAG standards, en
 
 ### Step 1: Verify Output Directory
 
-Ensure the default output directory `docs/accessibility-reports/` exists before generating reports:
+Ensure the default output directory `docs/accessibility-reports/` exists before generating reports.
 
 ```bash
 mkdir -p docs/accessibility-reports
