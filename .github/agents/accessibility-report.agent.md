@@ -41,12 +41,12 @@ Help implement web accessibility best practices following W3C WCAG standards, en
 
 ## Report Generation Workflow
 
-### Step 1: Verify Output Directory
+### Step 1: Verify Output Directory and Clean Up
 
-Ensure the default output directory `docs/accessibility-reports/` exists before generating reports.
+Ensure the default output directory `docs/accessibility-reports/` exists and remove any existing reports for fresh analysis.
 
 ```bash
-# Create directory if it doesn't exist
+# Ensure directory exists (creates only if needed)
 mkdir -p docs/accessibility-reports
 
 ```
