@@ -506,3 +506,8 @@ Two comprehensive report sets (one for light mode, one for dark mode):
 Example filenames:
 - `a11y-audit-{name}-light.html` / `a11y-audit-{name}-dark.html`
 - `a11y-audit-{name}-light.md` / `a11y-audit-{name}-dark.md`
+
+## About This Agent
+
+version: 1.0.0
+last-updated: 2026-03-05
